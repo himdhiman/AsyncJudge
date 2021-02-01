@@ -54,20 +54,45 @@ TEMPLATES = [
 WSGI_APPLICATION = 'AsyncJudge.wsgi.application'
 ASGI_APPLICATION = 'AsyncJudge.asgi.application'
 
-CELERY_BROKER_URL = 'redis://localhost:6379'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": 'redis://admin:adminadminadmin@3bbc5b24-2dae-4b03-8433-9bd73e7f2d4a.a618efcd6c3341158fb843970f0d7edd.databases.appdomain.cloud:32159',
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "MAX_ENTRIES": 1000
+        },
+    }
+}
+
+# CELERY_BROKER_URL = 'redis://localhost:6379'
+# CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+
+CELERY_BROKER_URL = 'rediss://admin:adminadminadmin@3bbc5b24-2dae-4b03-8433-9bd73e7f2d4a.a618efcd6c3341158fb843970f0d7edd.databases.appdomain.cloud:32159?ssl_cert_reqs=CERT_NONE'
+CELERY_RESULT_BACKEND = 'rediss://admin:adminadminadmin@3bbc5b24-2dae-4b03-8433-9bd73e7f2d4a.a618efcd6c3341158fb843970f0d7edd.databases.appdomain.cloud:32159?ssl_cert_reqs=CERT_NONE'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+# CELERY_ACKS_LATE = True
 
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("localhost", 6379)],
+            "hosts": ["redis://admin:adminadminadmin@3bbc5b24-2dae-4b03-8433-9bd73e7f2d4a.a618efcd6c3341158fb843970f0d7edd.databases.appdomain.cloud:32159"],
         },
     },
 }
+
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels_redis.core.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": [("localhost", 6379)],
+#         },
+#     },
+# }
 
 
 
